@@ -22,7 +22,12 @@
                     @else
                         <a class="btn btn-outline-primary me-2" href="{{route('account.login')}}" type="submit">Login</a>
                     @endif
+					@if (Auth::user() == "")
+						<a class="btn btn-primary" href="{{route('account.login')}}" type="submit">Login to post job</a>
+						@else
                     <a class="btn btn-primary" href="{{route('account.createJob')}}" type="submit">Post a Job</a>
+
+					@endif
 
 			</div>
 		</div>

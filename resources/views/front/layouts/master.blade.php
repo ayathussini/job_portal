@@ -56,14 +56,14 @@
 	    }
 	});
 	$("#profilePicForm").submit(function(e){
-	e.preventDefault(); // منع إعادة تحميل الصفحة
+	e.preventDefault(); 
 
-	var formData = new FormData(this); // جمع بيانات النموذج بما في ذلك الملف
+	var formData = new FormData(this);
 
 	$.ajax({
-		url: '{{ route("account.updateProfilePic") }}', // URL الوجهة
-		type: 'post', // نوع الطلب
-		data: formData, // بيانات النموذج
+		url: '{{ route("account.updateProfilePic") }}',
+		type: 'post', 
+		data: formData, 
 		dataType: 'json',
 		contentType: false, // لمنع jQuery من تعديل نوع البيانات
 		processData: false, // منع jQuery من تحويل البيانات إلى نص

@@ -64,11 +64,11 @@
                             </ul>
                             </div>
                             @endif
-                            @if(!empty($job->qualification ))  
+                            @if(!empty($job->qualifications ))  
                             <div class="single_wrap">
                             <h4>Qualifications</h4>
                                <ul>
-                                 {!! nl2br($job->qualification) !!} 
+                                 {!! nl2br($job->qualifications) !!} 
                                  </ul>
                             </div>
                             @endif

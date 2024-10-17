@@ -143,14 +143,14 @@ class JobsController extends Controller
 
     
     //send notification email to employer
-    $employer=User::where('id',$employer_id)->first();
-    $mailDate=[
-        'employer'=> $employer,
-        'user'=>Auth::user(),
-        'job'=>$job,
+    // $employer=User::where('id',$employer_id)->first();
+    // $mailDate=[
+    //     'employer'=> $employer,
+    //     'user'=>Auth::user(),
+    //     'job'=>$job,
         
-    ];
-    Mail::to($employer->email)->send(new JobNotificationEmail($mailDate));
+    // ];
+    // Mail::to($employer->email)->send(new JobNotificationEmail($mailDate));
 
 
 

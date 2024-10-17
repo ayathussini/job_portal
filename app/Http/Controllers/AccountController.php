@@ -184,8 +184,12 @@ public function createJob(){
     return view('front.account.job.create',[
         'categories'=> $categories,
         'jobTypes'=>$jobTypes,
-
+       
     ]);
+     if(Auth::user() == ""){
+            return view('front.account.login');
+        }
+
 
 }
 public function saveJob(Request $request){
@@ -452,39 +456,42 @@ public function updatePassword(Request $request) {
        return redirect()->route('account.forgotPassword')->with('success','Reste password email has been sent to your inbox');
        
       }
-      public function resetPassword($tokenString){
-        $token= \DB::table('password_reset_tokens')->where('token',$tokenString)->first();
-        if($token == null){
-            return redirect()->route('account.forgotPassword')->with('error','Invalid token');
-
-        };
+      public function resetPassword(){
+     
         return view('front.account.reset-password',[
-            'tokenString'=>$tokenString
+         
         ]);
 
-      }
-      public function processResetPassword(Request $request){
-        $token= \DB::table('password_reset_tokens')->where('token',$request->token)->first();
-        if($token == null){
-            return redirect()->route('account.forgotPassword')->with('error','Invalid token');
-
-        };
-
-
-         $validator = Validator::make($request->all(), [
-        'new_password' => ['required','min:8'],
-        'confirm_password' => ['required','same:new_password'],
-        
-
+      }  
+ public function processResetPassword(Request $request)
+{
+    // التحقق من صحة البيانات المدخلة
+    $validator = Validator::make($request->all(), [
+        'new_password' => ['required', 'min:8'],
+        'confirm_password' => ['required', 'same:new_password'],
     ]);
-      if($validator->fails())
-      {
-        return redirect()->route(route: 'account.resetPassword')->withErrors($validator);
-      }
-       User::where('email',$token->email)->update([
-        'password'=> Hash::make($request->new_password)
-       ]);
-        return redirect()->route(route: 'account.login')->with('success','You have successfully changed your password ');
 
-      }
-   }
+    // في حال فشل التحقق، يتم إعادة التوجيه مع الأخطاء
+    if ($validator->fails()) {
+        return redirect()->route('account.resetPassword')->withErrors($validator);
+    }
+
+    // البحث عن المستخدم بواسطة البريد الإلكتروني
+    $user = User::where('email', $request->email)->first();
+
+    // التحقق من وجود المستخدم
+    if (!$user) {
+        // إذا لم يتم العثور على المستخدم، أعد التوجيه مع رسالة خطأ
+        return redirect()->route('account.resetPassword')->withErrors(['email' => 'User not found.']);
+    }
+
+    // تحديث كلمة المرور
+    $user->update([
+        'password' => Hash::make($request->new_password)
+    ]);
+
+    // إعادة التوجيه إلى صفحة تسجيل الدخول مع رسالة نجاح
+    return redirect()->route('account.login')->with('success', 'You have successfully changed your password.');
+}
+
+}

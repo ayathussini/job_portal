@@ -35,6 +35,9 @@
                         <div class="justify-content-between d-flex">
                         <button class="btn btn-primary mt-2">Submit</button>
                         </div>
+                        <div class="justify-content-between d-flex">
+                        <button class="btn btn-primary mt-2"> <a  style="color: white"  href="{{route('account.processResetPassword')}}">Change Password</a></button>
+                        </div>
                     </form>                    
                 </div>
                 <div class="mt-4 text-center">

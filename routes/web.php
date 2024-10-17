@@ -22,7 +22,7 @@ Route::post('/apply-job',action: [JobsController::class,'applyJob'])->name('appl
 Route::post('/save-job',action: [JobsController::class,'saveJob'])->name('saveJob');
 Route::get('/forgot-password',action: [AccountController::class,'forgotPassword'])->name('account.forgotPassword');
 Route::post('/process-forgot-password',action: [AccountController::class,'processForgotPassword'])->name('account.processForgotPassword');
-Route::get('/reset-password/{token}',action: [AccountController::class,'resetPassword'])->name('account.resetPassword');
+Route::get('/reset-password',action: [AccountController::class,'resetPassword'])->name('account.resetPassword');
 Route::get('/process-reset-password',action: [AccountController::class,'processResetPassword'])->name('account.processResetPassword');
 
 
